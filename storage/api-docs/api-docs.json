@@ -1,0 +1,293 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "書系統API",
+        "description": "RESTful API",
+        "contact": {
+            "email": "liao00428@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/books": {
+            "get": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "取得書資源列表",
+                "description": "查看書資源列表",
+                "operationId": "bookIndex",
+                "parameters": [
+                    {
+                        "name": "filters",
+                        "in": "query",
+                        "description": "篩選條件",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "name:歷險"
+                    },
+                    {
+                        "name": "sorts",
+                        "in": "query",
+                        "description": "排序條件",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "name:asc,id:desc"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "設定回傳資料筆數(預設10筆資料)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "請求成功"
+                    },
+                    "401": {
+                        "description": "身分驗證未通過"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "新增書本資料",
+                "description": "新增書本資料",
+                "operationId": "bookStore",
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "schema": "Book",
+                                "required": [
+                                    "type_id",
+                                    "name",
+                                    "writer"
+                                ],
+                                "properties": {
+                                    "type_id": {
+                                        "description": "書本分類",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "name": {
+                                        "description": "書本名稱",
+                                        "type": "string",
+                                        "example": "哈利波特"
+                                    },
+                                    "writer": {
+                                        "description": "作者",
+                                        "type": "string",
+                                        "example": "jk.羅琳"
+                                    },
+                                    "publishdate": {
+                                        "description": "出版日期",
+                                        "type": "date",
+                                        "example": "2000-05-05"
+                                    },
+                                    "summary": {
+                                        "description": "簡介",
+                                        "type": "text",
+                                        "example": "魔法故事"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "請求成功"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/api/books/{id}": {
+            "get": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "查看單一書本資源",
+                "description": "查看單一書本資源",
+                "operationId": "bookShow",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Book id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "請求成功"
+                    },
+                    "401": {
+                        "description": "身分驗證未通過"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "刪除書本資料",
+                "description": "刪除動物資料",
+                "operationId": "bookDelete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Book id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "刪除回傳空直"
+                    },
+                    "404": {
+                        "description": "找不到資源"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "更新書本資料",
+                "description": "更新書本資料",
+                "operationId": "bookUpdate",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Book id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "schema": "Book",
+                                "required": [
+                                    "type_id",
+                                    "name",
+                                    "writer"
+                                ],
+                                "properties": {
+                                    "type_id": {
+                                        "description": "書本分類",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "name": {
+                                        "description": "書本名稱",
+                                        "type": "string",
+                                        "example": "哈利波特"
+                                    },
+                                    "writer": {
+                                        "description": "作者",
+                                        "type": "string",
+                                        "example": "jk.羅琳"
+                                    },
+                                    "publishdate": {
+                                        "description": "出版日期",
+                                        "type": "date",
+                                        "example": "2000-05-05"
+                                    },
+                                    "summary": {
+                                        "description": "簡介",
+                                        "type": "text",
+                                        "example": "魔法故事"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "請求成功"
+                    },
+                    "404": {
+                        "description": "找不到資源"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "responses": {
+            "401": {
+                "description": "身分驗證未通過"
+            }
+        },
+        "securitySchemes": {
+            "passport": {
+                "type": "oauth2",
+                "description": "Laravel passport oauth2 security.",
+                "in": "header",
+                "scheme": "https",
+                "flows": {
+                    "password": {
+                        "authorizationUrl": "http://book.test/oauth/authorize",
+                        "tokenUrl": "http://book.test/oauth/token",
+                        "refreshUrl": "http://book.test/token/refresh",
+                        "scopes": []
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
